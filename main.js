@@ -40,28 +40,28 @@ class Field {
   checkForWin() {
     if (this.field[this.verticalPosition][this.horizontalPosition] === hat) {
       console.log("You found the hat - You win!!");
+      this.gameStatus = "over";
     }
-    this.gameStatus = "over";
   }
   checkForLoss() {
     if (this.field[this.verticalPosition][this.horizontalPosition] === hole) {
       console.log("Whoops you fell in a hole :(");
+      this.gameStatus = "over";
     }
-    this.gameStatus = "over";
   }
   modifyField() {
-    if (this.gameStatus === "active") {
-      this.field[this.verticalPosition][this.horizontalPosition] = "*";
-    }
+    this.field[this.verticalPosition][this.horizontalPosition] = "*";
   }
   playGame() {
+    this.printField();
     while (this.gameStatus === "active") {
-      this.printField();
       this.handleInput();
       this.checkForWin();
       this.checkForLoss();
-      this.modifyField();
-      this.printField();
+      if (this.gameStatus === "active") {
+        this.modifyField();
+        this.printField();
+      }
     }
   }
 }
@@ -74,7 +74,7 @@ class Field {
 
 const myField = new Field(
   [
-    ["*", "^", "O"],
+    ["*", "░", "O"],
     ["░", "O", "░"],
     ["░", "^", "░"],
   ],
