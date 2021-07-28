@@ -35,6 +35,13 @@
    - Attempts to move “outside” the field.
    - When any of the above occur, let the user know and end the game.
 
+   Think about breaking down the necessary functionality into helper methods. In our solution, we approached this problem by creating:
+
+   - Methods to test whether the current location results in win (user is on the hat) or a loss (user is on a hole or out-of-bounds).
+   - A method to handle asking and accepting user input, and updating the current location.
+   - A method to run the main game loop until the game is won or lost.
+   - To facilitate this, we also stored a horizontal and vertical player location on the class instance and initialize them in the constructor.
+
 5. Add a .generateField() method to your Field class. This doesn’t need to be tied to a particular instance, so make it a static method of the class itself.
 
    This method should at least take arguments for height and width of the field, and it should return a randomized two-dimensional array representing the field with a hat and one or more holes. In our solution, we added a third percentage argument used to determine what percent of the field should be covered in holes.
