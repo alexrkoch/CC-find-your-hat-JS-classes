@@ -6,15 +6,40 @@ const fieldCharacter = "░";
 const pathCharacter = "*";
 
 class Field {
-  constructor(field, verticalLimit, horizontalLimit) {
+  constructor(field) {
     this.field = field;
     this.verticalPosition = 0;
     this.horizontalPosition = 0;
-    this.verticalLimit = verticalLimit;
-    this.horizontalLimit = horizontalLimit;
+    this.verticalLimit = field.length;
+    this.horizontalLimit = field[0].length;
     this.gameStatus = "active";
   }
-  static generateField() {}
+  static generateField(verticalSize, horizontalSize, holeProbability) {
+    const totalCells = verticalSize * horizontalSize;
+    const holeOccurrence = Math.floor(totalCells * holeProbability);
+    let fieldArray = [];
+    let hatSelector = Math.floor(Math.random() * (totalCells - 1)) + 1;
+    let cellCounter = 0;
+    for (let i = 0; i < verticalSize; i++) {
+      fieldArray[i] = [];
+      for (let j = 0; j < horizontalSize; j++) {
+        let randomSelector = Math.floor(Math.random() * totalCells);
+        if (cellCounter === hatSelector) {
+          fieldArray[i][j] = hat;
+          cellCounter++;
+        } else if (randomSelector <= holeOccurrence) {
+          fieldArray[i][j] = hole;
+          cellCounter++;
+        } else {
+          fieldArray[i][j] = fieldCharacter;
+          cellCounter++;
+        }
+      }
+    }
+    fieldArray[0][0] = pathCharacter;
+    return fieldArray;
+  }
+
   printField() {
     this.field.forEach((element) => console.log(element.join("")));
   }
@@ -66,20 +91,6 @@ class Field {
   }
 }
 
-// const newField = Field.generateField(x, y);
-// const myField = new Field(newField);
-// myField.gamePlay();
-
-// TESTING PLAYGROUND
-
-const myField = new Field(
-  [
-    ["*", "░", "O"],
-    ["░", "O", "░"],
-    ["░", "^", "░"],
-  ],
-  3,
-  3
-);
-
+const newField = Field.generateField(10, 20, 0.4);
+const myField = new Field(newField);
 myField.playGame();
